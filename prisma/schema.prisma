@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model DashboardMetric {
+  id        String   @id @default(cuid())
+  metricKey String   @unique
+  label     String
+  value     String
+  position  Int
+  updatedAt DateTime @updatedAt
+}
+
+model WorkflowRequest {
+  id             String   @id @default(cuid())
+  projectName    String
+  goal           String
+  model          String
+  budget         Int
+  priority       String   @default("normal")
+  requesterUserId String?
+  requesterName  String
+  requesterEmail String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
